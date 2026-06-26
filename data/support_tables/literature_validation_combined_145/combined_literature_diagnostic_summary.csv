@@ -1,0 +1,2 @@
+n_routes,full_network_strong_or_exact,full_network_moderate_or_better,top5_strong_or_exact,top5_moderate_or_better,top20_moderate_or_better,top5_miss_but_full_network_moderate,mean_top5_similarity
+145,141,143,87,109,128,34,0.79743

@@ -1,0 +1,344 @@
+\documentclass[11pt, letterpaper]{article}
+\usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\renewcommand{\tablename}{Supplementary Table}
+\renewcommand{\arraystretch}{1.08}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\begin{document}
+\title{Supplementary Tables for ``InvDesRoute: route-network planning for inorganic synthesis''}
+\author{Yiheng Zhan, Ze-Feng Gao, and Zhong-Yi Lu}
+\date{}
+\maketitle
+
+\section*{Supplementary tables}
+\begin{table}[p]
+\centering
+\tiny
+\caption{\textbf{InvDesRoute workflow modules and outputs.}}
+% 中文：工作流模块与对应输出。
+\begin{tabular}{p{0.22\textwidth}p{0.68\textwidth}}
+\toprule
+\textbf{Module} & \textbf{Output} \\
+\midrule
+Input handling & Normalized formula, parsed CIF target, and chemical-system expansion \\
+Phase retrieval & MP phase table, CIF cache, Ehull, and formation-energy metadata \\
+PET evaluation & Phase-level PET energies per reduced formula \\
+Reaction network & Balanced formation/decomposition reactions and per-target reaction energies \\
+Route filtering & Practical-route flags, precursor complexity, and coefficient-scale filters \\
+Recommendation & Ranked routes, confidence labels, risk flags, and DFT-refinement queue \\
+\bottomrule
+\end{tabular}
+% 中文表格内容：输入处理：规范化化学式、解析后的 CIF 目标、化学体系扩展；相检索：MP 相表、CIF 缓存、Ehull 与形成能元数据；PET 评估：每最简式 PET 相能量；反应网络：配平形成/分解反应及单位目标反应能；路线过滤：practical-route 标记、前驱体复杂度与反应系数过滤；推荐：路线排序、置信标签、风险标记与 DFT 精修队列。
+\label{supp-tab:workflow_modules}
+\end{table}
+
+\begin{table}[p]
+\centering
+\small
+\caption{\textbf{Category-level benchmark statistics.}}
+% 中文：120 目标 benchmark 的分类统计。
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Category} & \textbf{Targets} & \textbf{Phases} & \textbf{Comparable rxns.} & \textbf{Mean MAE} & \textbf{Top-1} \\
+ & & & & \textbf{(eV/target)} & \textbf{match} \\
+\midrule
+Halides & 20 & 81 & 81 & 0.426 & 1.00 \\
+Binary oxides & 25 & 339 & 1,807 & 0.538 & 0.84 \\
+Nitrides/carbides/chalcogenides & 25 & 172 & 433 & 0.184 & 0.88 \\
+Ternary oxides & 25 & 514 & 7,476 & 0.871 & 0.72 \\
+Battery/salts/silicates & 25 & 513 & 7,288 & 0.870 & 0.72 \\
+\midrule
+Total / average & 120 & 1,619 & 17,085 & 0.584 & 0.825 \\
+\bottomrule
+\end{tabular}
+\label{supp-tab:category_stats}
+\end{table}
+
+\begin{table}[p]
+\centering
+\small
+\caption{\textbf{Thermodynamic consistency after literature-seeded target extension.}}
+% 中文：文献种子目标扩展后的热力学一致性统计。
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Benchmark} & \textbf{Targets} & \textbf{Comparable rxns.} & \textbf{Mean MAE} & \textbf{Sign cons.} & \textbf{Top-1} \\
+ & & & \textbf{(eV/target)} & & \textbf{match} \\
+\midrule
+Balanced inorganic set & 120 & 17,085 & 0.584 & 0.931 & 0.825 \\
+Literature-seeded extension & 53 & 2,769 & 1.784 & 0.904 & 0.792 \\
+\midrule
+Combined audit & 173 & 19,854 & 0.952 & 0.923 & 0.815 \\
+\bottomrule
+\end{tabular}
+\label{supp-tab:extended_benchmark}
+\end{table}
+
+\begin{table}[p]
+\centering
+\tiny
+\caption{\textbf{Representative route hypotheses before and after precursor-aware recommendation.} Simple binaries are well represented by direct practical PET routes. Dense oxide and battery-precursor cases require the later InvDesRoute score layer to promote experimentally familiar precursor families. Energy values are per target formula unit from the route table and should be interpreted together with the listed display mode and risk flags in the full output.}
+% 中文：前驱体感知推荐前后的代表性路线假设。简单二元体系可以由直接 practical PET 路线很好表示；密集氧化物和电池前驱体案例则需要后续 InvDesRoute score 层把实验上熟悉的前驱体路线族提升到前列。能量为路线表中的每目标化学式单位数值，需要结合所列展示模式以及完整输出中的风险标记共同解释。
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{0.09\textwidth}p{0.18\textwidth}p{0.46\textwidth}p{0.12\textwidth}p{0.09\textwidth}}
+\toprule
+\textbf{Target} & \textbf{Category} & \textbf{Displayed route hypothesis} & \textbf{$\Delta E$} & \textbf{Mode} \\
+\midrule
+KI & Halide & I + K $\rightarrow$ KI & $-3.013$ & Direct PET \\
+NaCl & Halide & Cl$_2$ + 2 Na $\rightarrow$ 2 NaCl & $-3.633$ & Direct PET \\
+Al$_2$O$_3$ & Binary oxide & 4 Al + 3 O$_2$ $\rightarrow$ 2 Al$_2$O$_3$ & $-15.159$ & Direct PET \\
+BN & Nitride & 2 B + N$_2$ $\rightarrow$ 2 BN & $-2.543$ & Direct PET \\
+SiC & Carbide & C + Si $\rightarrow$ SiC & $-0.415$ & Direct PET \\
+BaTiO$_3$ & Perovskite oxide & BaCO$_3$ + TiO$_2$ $\rightarrow$ BaTiO$_3$ + CO$_2$ & $2.399$ & Score-ranked \\
+CaTiO$_3$ & Perovskite oxide & CaCO$_3$ + TiO$_2$ $\rightarrow$ CaTiO$_3$ + CO$_2$ & $2.103$ & Score-ranked \\
+LiFePO$_4$ & Battery compound & 2 FeO + Li$_2$CO$_3$ + P$_2$O$_5$ $\rightarrow$ CO$_2$ + 2 LiFePO$_4$ & $-1.120$ & Score-ranked \\
+GaN & Nitride & 2 Ga + 2 NH$_3$ $\rightarrow$ 2 GaN + 3 H$_2$ & $-0.863$ & Score-ranked \\
+CaCO$_3$ & Carbonate & CO$_2$ + CaO $\rightarrow$ CaCO$_3$ & $-1.520$ & Score-ranked \\
+\bottomrule
+\end{tabular}
+}
+\label{supp-tab:representative_routes}
+\end{table}
+
+\begin{table}[p]
+\centering
+\small
+\caption{\textbf{Literature-route validation.} Exact matching requires the same balanced precursor/product expression. Route-family matching uses precursor classes, target-element sources, byproduct classes and synthesis templates. The combined DOI comparison includes the initial 59-route overlap set and 86 additional literature-seeded routes from 53 non-overlapping targets. The current table reports algorithmic route-family labels only. Before these labels are treated as threshold-robust or independently adjudicated chemical correspondence, the release package requires a frozen \texttt{route\_family\_robustness\_contract.csv} plus threshold-sensitivity, negative-control and human-anchor records in \texttt{route\_family\_robustness.csv}.}
+% 中文：文献路线验证。Exact matching 要求相同的配平前驱体/产物表达式；route-family matching 使用前驱体类别、目标元素来源、副产物类别和合成模板。合并 DOI 审计包含初始 59 条重叠路线和来自 53 个非重叠目标的 86 条文献种子扩展路线。
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Validation set} & \textbf{Cases} & \textbf{Metric} & \textbf{Found} & \textbf{Top-5} & \textbf{Top-20} \\
+\midrule
+Curated seed routes & 80 & Exact & 80 & 75 & 79 \\
+Curated seed routes & 80 & Route family & 80 & 77 & 80 \\
+DOI-backed text-mined routes & 59 & Exact & 40 & 16 & 19 \\
+DOI-backed text-mined routes & 59 & Route family & 57 & 40 & 47 \\
+Literature-seeded extension & 86 & Route family & 86 & 69 & 81 \\
+Combined DOI-backed audit & 145 & Route family & 143 & 109 & 128 \\
+\bottomrule
+\end{tabular}
+\label{supp-tab:literature_validation}
+\end{table}
+
+\begin{table}[p]
+\centering
+\small
+\caption{\textbf{Recommendation-ranking ablation on 145 DOI-backed literature-route records.} Values report route-family recovery in the top-$k$ recommendation window under matched route-level policies with the same DOI routes, candidate routes and PET energies. This table is not a target-level workflow-baseline comparison.}
+% 中文：145 条带 DOI 文献路线记录上的推荐排序消融。数值表示 top-$k$ 推荐窗口中的路线族恢复情况。
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Ranking mode} & \textbf{Top-5 strong/exact} & \textbf{Top-5 moderate+} & \textbf{Top-5 mean sim.} & \textbf{Top-10 moderate+} \\
+\midrule
+PET energy only & 7/145 & 13/145 & 0.488 & 21/145 \\
+Practical first + PET energy & 11/145 & 33/145 & 0.539 & 58/145 \\
+InvDesRoute score & 87/145 & 109/145 & 0.797 & 121/145 \\
+Diversity-aware display & 87/145 & 113/145 & 0.798 & 126/145 \\
+\bottomrule
+\end{tabular}
+}
+\label{supp-tab:ranking_ablation}
+\end{table}
+
+\begin{table}[p]
+\centering
+\tiny
+\caption{\textbf{Frozen InvDesRoute workflow-level baseline design.} These policy families define the validation upgrade needed to compare route-aware ranking with target-stability or route-ignorant screens. The rows are not populated results. A submission-strength comparison must freeze the policy contract, baseline manifest and matched baseline table before label inspection; the 145-route top-5 design then requires 580 included records with one shared evaluation set, candidate set and route-exposure source, pre-label ranks, no label inputs and recomputed recovery flags.}
+% 中文：冻结的工作流级基线设计。该表定义了区分 route-aware 推荐增益与普通 target-stability 或 route-ignorant 筛选所需的匹配基线族。表中内容是审计设计，不是额外结果；在比较目标级和路线级策略前，对应源表必须为每个策略族、带 DOI 文献路线和 top-$k$ 窗口包含一条记录。
+\begingroup
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{L{0.22\textwidth}L{0.11\textwidth}L{0.15\textwidth}L{0.18\textwidth}L{0.24\textwidth}}
+\toprule
+\textbf{Policy family} & \textbf{Rank unit} & \textbf{Route enumeration} & \textbf{Allowed score inputs} & \textbf{Purpose and leakage guard} \\
+\midrule
+Target-stability only & Target & No & Target Ehull or target-stability fields & Upgrade-only target control; routes are exposed through a frozen post-target window and no precursor, route or label inputs are allowed \\
+Route-ignorant energy & Target & No & Target phase energy and target stability fields & Upgrade-only target control for structure/energy information without synthesis-route enumeration; uses the same frozen route-exposure source \\
+PET energy only & Route & Yes & Enumerated route energy & Current route-level ablation testing whether reaction energy alone makes literature-like routes visible; route rank is the route-exposure rank \\
+Route-aware score & Route & Yes & Route energy, precursor class, route template, practicality and condition-risk fields & Current full-score route ablation; route rank is the route-exposure rank and literature or route-family labels are never scoring inputs \\
+\bottomrule
+\end{tabular}
+\endgroup
+\vspace{2pt}
+\footnotesize\emph{Expected policy ids:} \texttt{target\_stability\_only}, \texttt{route\_ignorant\_energy}, \texttt{pet\_energy\_only} and \texttt{route\_aware\_score}. Real records must copy the freeze-manifest hashes, route-exposure source id/hash, score-input allow/deny lists and pre-label flags.
+\label{supp-tab:workflow_baseline_design}
+\end{table}
+
+\begin{table}[p]
+\centering
+\small
+\caption{\textbf{Failure-mode diagnostics for DOI-backed literature routes.} Literature routes are grouped by precursor class. Counts are overlapping because one route can contain multiple precursor classes.}
+% 中文：带 DOI 文献路线的失败模式诊断。文献路线按前驱体类别分组。由于一条路线可包含多种前驱体类别，因此各组计数可重叠。
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Route group} & \textbf{Routes} & \textbf{Full-network moderate+} & \textbf{Top-5 moderate+} & \textbf{Mean top-5 sim.} \\
+\midrule
+Binary-oxide source & 105 & 105 & 84 & 0.844 \\
+Carbonate-containing & 73 & 72 & 69 & 0.892 \\
+Gas-reservoir & 45 & 45 & 35 & 0.749 \\
+Hydroxide/hydrate & 29 & 28 & 13 & 0.593 \\
+Elemental-source & 17 & 16 & 15 & 0.834 \\
+Phosphate-source & 11 & 11 & 3 & 0.513 \\
+Nitrate/ammonium & 8 & 8 & 3 & 0.580 \\
+Target-element compound & 8 & 7 & 5 & 0.556 \\
+\bottomrule
+\end{tabular}
+}
+\label{supp-tab:failure_modes}
+\end{table}
+
+\begin{table}[p]
+\centering
+\small
+\caption{\textbf{Recommendation-layer triage summary.} High, medium and low are refinement-triage categories from observable route and phase triggers, not calibrated success probabilities; probability claims require the populated confidence-calibration records defined in Supplementary Table 13.}
+% 中文：推荐层分类汇总。
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Category} & \textbf{Targets} & \textbf{High} & \textbf{Medium} & \textbf{Low} & \textbf{Exergonic practical rate} \\
+\midrule
+Halides & 20 & 20 & 0 & 0 & 1.00 \\
+Binary oxides & 25 & 21 & 3 & 1 & 0.96 \\
+Nitrides/carbides/chalcogenides & 25 & 24 & 1 & 0 & 0.96 \\
+Ternary oxides & 25 & 16 & 9 & 0 & 1.00 \\
+Battery/salts/silicates & 25 & 23 & 2 & 0 & 1.00 \\
+\midrule
+Total & 120 & 104 & 15 & 1 & 0.983 \\
+\bottomrule
+\end{tabular}
+\label{supp-tab:recommendation_summary}
+\end{table}
+
+\begin{table}[p]
+\centering
+\tiny
+\caption{\textbf{Route-resolved audit and reproducibility fields.} Minimum archived fields needed to trace recovery, ranking-ablation and confidence-label statistics to individual records.}
+% 中文：随稿数据包中应包含的逐路线审计与复现字段。该表定义归档数据包中应至少包含哪些字段，使主文中的恢复率、排序消融和置信标签统计可以追溯到单条记录。
+\begingroup
+\setlength{\tabcolsep}{1.5pt}
+\renewcommand{\arraystretch}{0.78}
+\begin{tabular}{L{0.24\textwidth}L{0.515\textwidth}L{0.145\textwidth}}
+\toprule
+\textbf{Audit component} & \textbf{Fields to archive} & \textbf{Traceability role} \\
+\midrule
+Target identity & Target formula, target source, category, benchmark split and stable target identifier & Target-level audit \\
+Phase context and model evidence & MP material identifiers, reduced formulas, Ehull, formation energies, CIF availability, PET-cache keys and model benchmark records for phase-, reaction-, target- and pressure-stress tests & Phase retrieval and energy-engine audit \\
+Route record & Balanced equation, reactants, products, target coefficient, route identifier and practical-route flag & Route enumeration audit \\
+Energy evidence & PET reaction energy, MP-form reaction energy, sign agreement, rank under PET energy and rank under MP-form energy & Thermodynamic audit \\
+Literature provenance & Source DOI, extracted target, written precursor formulas, filtering decision and exclusion reason when applicable & Literature audit \\
+Similarity audit & Exact-match flag, rule and threshold versions, precursor recall, Jaccard overlap, target-element-source recall, precursor-class overlap, gas/byproduct terms, template bonus, recomputable component score and top-$k$ algorithmic route-family labels & Current algorithmic route-family evidence \\
+Route-family robustness & Frozen robustness contract, threshold perturbations, negative-control pairs, baseline/perturbed/control scores and labels, label-change flags, human-anchor joins and algorithmic-human agreement flags & Robustness-upgrade evidence \\
+Annotation contract and packet & Frozen blinded packet manifest with visible route chemistry, hidden score/rank/expected-label/algorithmic-label fields, sampling strata, label columns, agreement metrics, content hash and packet version & Human-supported label evidence \\
+Ranking ablation & Rank under PET energy-only, practical-first energy, InvDesRoute score and diversity-aware display & Baseline audit \\
+Workflow baseline & Policy-contract id, policy family, rank unit, route-exposure rule, route-exposure source id/hash, current evidence role, route-enumeration flag, precursor-information flag, required score inputs, allowed score inputs, disallowed score inputs, claim boundary, baseline-freeze id, baseline record id, evaluation-set id, candidate-set id, policy/evaluation/candidate hashes, ranking generation release, pre-label-inspection flags, top-$k$ window, policy-unit rank, route-exposure rank, route-family recovery label and literature-label-used flag & Route-aware versus route-ignorant audit \\
+Held-out rank freeze & Frozen ranking-table join, matched-route to route-id mapping, submitted rank, ranking-record id/hash, rank-submission timestamp, label-release timestamp, publication-year source, split rule, disallowed label inputs and leakage flags & Blind-style split integrity audit \\
+Confidence label and calibration contract & Trigger-based high/medium/low label, confidence-label id/hash, frozen config/release ids, trigger-rule version, pre-outcome flag, declared trigger fields, refinement-queue reason, calibration contract and freeze ids, outcome id/hash, score-bin policy, minimum label support, probability-claim policy and leakage flags & Triage-versus-calibration audit \\
+Figure-panel provenance & Figure id, panel id, panel title, panel claim, reader takeaway, source tables, audit gate, metric fields and claim boundary for every captioned panel in Figures 1--5; upgraded-validation terms must appear only as explicit boundaries, and each source-table type must be paired with its matching audit gate & Figure-logic audit \\
+Claim support & Claim id, manuscript location, claim text, evidence table, record filter, statistic script, figure or table location, audit gate, allowed interpretation and boundary not claimed & Editorial claim-boundary audit \\
+Validation-state map & Claim id, current validation state, current allowed claim, stronger claim requiring upgrade, current evidence tables, upgrade tables blocking the stronger claim, submission gate and notes & Current-versus-upgrade boundary audit \\
+Reviewer rerun package & Environment file, reviewer checklist, frozen configs, source tables, figure-source records, regenerated provenance summaries and one-command submission gate & Final-release reproducibility audit \\
+\bottomrule
+\end{tabular}
+\endgroup
+\label{supp-tab:reproducibility_fields}
+\end{table}
+
+\begin{table}[p]
+\centering
+\tiny
+\caption{\textbf{Pre-submission reproducibility gates.} These gates define what the archived release package should prove before first submission. They do not introduce additional result claims; instead, they specify how manuscript statistics should be made independently checkable from populated source tables and scripts.}
+% 中文：首投稿前的复现门槛。这些门槛定义归档 release package 在首投前应证明什么。它们不引入额外结果声称，而是规定如何从填充后的源表和脚本审计手稿统计量。
+\begingroup
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{0.78}
+\begin{tabular}{L{0.24\textwidth}L{0.44\textwidth}L{0.22\textwidth}}
+\toprule
+\textbf{Gate} & \textbf{Required evidence} & \textbf{Failure caught} \\
+\midrule
+Schema completeness & All target, phase, route, literature, similarity, ranking, confidence and gas-sensitivity tables contain the required stable identifiers and audit fields & Missing provenance or non-joinable records \\
+Model-benchmark audit & Phase-, reaction-, target- and pressure-stress benchmark records for Figure 2 preserve benchmark id, model name, model version, reference method, metric value and comparator group & Energy-engine selection cannot be independently checked \\
+Configuration freezing & Benchmark, enumeration, scoring, literature-audit, held-out, annotation, calibration and gas-sensitivity configuration files are archived without template markers or placeholder values, expose non-placeholder frozen configuration identifiers and pass cross-config and table-level frozen-identifier consistency checks & Reviewer reruns depend on undocumented settings or mixed frozen states \\
+Protocol freezing & Held-out/time-split, workflow-baseline, route-family annotation and confidence-calibration protocols define frozen inputs, matched evaluation units, annotation-packet manifests, exclusion rules, metrics and failure conditions before upgraded tables are populated & Validation upgrades cannot be independently repeated \\
+Workflow audit & Target, phase, PET-cache, formation-route and route-energy records for the 120-target benchmark join by stable identifiers and reproduce the target, phase, PET-coverage, route-count, sign-consistency, top-route-agreement, top-5-overlap and exergonic-practical-route statistics declared in the frozen benchmark config & Formula/CIF-to-route claim cannot be traced to source records \\
+Statistic traceability & A script recomputes the abstract and main-text counts, sign-consistency values, route-recovery values, ablation values and refinement-queue size from archived tables & Manuscript numbers not tied to source records \\
+Literature-route audit & DOI routes preserve written precursors, matched computed routes, exact-match labels, route-family components, rule/threshold versions and split labels; stronger route-family claims require robustness and human-anchor records & Algorithmic labels cannot be checked back to source chemistry or may be mistaken for threshold-independent truth \\
+Human annotation audit & Agreement sets join to frozen annotation contracts and blinded packet manifests, preserve independent labels, adjudication ids and agreement metrics including Cohen's kappa & Human labels can be contaminated by model rank, score, expected label, algorithmic label or post hoc sampling/metrics \\
+Ranking-ablation audit & Energy-only, practical-first, InvDesRoute-score and diversity-aware display ranks are recomputed for the same included DOI-backed literature routes and route candidates & Route-level visibility gains are detached from the same DOI-route records or confused with target-level baseline superiority \\
+Workflow-baseline audit & Frozen target-stability-only, route-ignorant, energy-only and route-aware policies share the same 145 DOI routes, candidate set and top-$k$ window; each row joins a freeze manifest, declares rank unit and route-exposure source, preserves allow/deny lists and pre-label flags, excludes label inputs and recomputes route-exposure top-$k$ recovery & Route-aware novelty cannot be separated from generic target-stability screening, hidden label leakage, rank-unit confusion or internally inconsistent recovery flags \\
+Split integrity & Each held-out/time-split evaluation keeps one frozen split, scoring release, candidate set, precursor library, route-family threshold and submitted-ranking table; rows preserve DOI/similarity joins, publication-year provenance, rank-submission before label release and false leakage flags & Hidden leakage, non-joinable validation records, invalid rank chronology or mixed frozen states \\
+Uncertainty audit & Confidence labels preserve row-level ids/hashes, frozen config/release ids, pre-outcome flags and trigger fields for route mismatch, top-5 overlap, decomposition competition and missing exergonic practical routes; calibration rows must join unchanged labels to frozen outcomes, a calibration contract and a freeze manifest before reliability, expected calibration error or probability summaries are reported & Trigger-based triage labels read as calibrated probabilities \\
+Claim-support audit & Each major abstract, Results and Discussion claim is represented in a claim-support table that links the claim to source tables, statistic scripts, figure/table locations, allowed interpretations and boundaries not claimed & Overstated claims without checkable source evidence \\
+Regeneration path & Figure-source tables, supplementary tables and headline statistics are rebuilt from one archived release directory with frozen configs, cross-checked identifiers, validation protocols, reviewer checklist, panel-claim wording checks and source-table-specific audit-gate checks & Figures or tables detached from submitted data, frozen settings, source checks, archive state or claim boundaries \\
+\bottomrule
+\end{tabular}
+\endgroup
+\label{supp-tab:reproducibility_gates}
+\end{table}
+
+\begin{table}[p]
+\centering
+\scriptsize
+\caption{\textbf{Main-figure logic and panel-level evidence records.} Each main figure answers one reader question in the article's five-question InvDesRoute validation map. Before submission, every captioned panel should have a row in the figure-source tables identifying the panel claim, reader takeaway, source table, audit gate and boundary not claimed. The source-table gate fails if any expected panel is missing, if a panel lacks an informative claim boundary, if upgraded-validation wording appears as a current panel claim rather than as an explicit boundary or if the listed source table is paired with an unrelated audit gate.}
+% 中文：主图逻辑和逐 panel 证据契约。每张主图回答 InvDesRoute 五步主张链条中的一个读者问题。投稿前，每个图注 panel 都应在 figure-source table 中有一行，说明 panel claim、reader takeaway、source table、audit gate 和不应声称的边界。
+\begin{tabular}{L{0.12\textwidth}L{0.23\textwidth}L{0.30\textwidth}L{0.23\textwidth}}
+\toprule
+\textbf{Figure} & \textbf{Reader question} & \textbf{Evidence stream} & \textbf{Boundary enforced} \\
+\midrule
+Figure 1 & What computational unit does InvDesRoute introduce? & Claim-support, target, phase, PET-cache, route, recommendation and figure-source records & Route-network decision object, not a scalar target-stability label or laboratory success \\
+Figure 2 & Can the energy engine support route-energy comparisons? & Frozen model-benchmark records across phase, reaction, target and pressure-stress levels & Route-relevant evidence, not universal inorganic accuracy \\
+Figure 3 & Can the route-network object be generated and checked at benchmark scale? & Joined 120-target target, phase, PET-cache, route-energy, recommendation and confidence-label tables & End-to-end route-network generation and thermodynamic consistency, not proof each target is synthesizable \\
+Figure 4 & Do generated networks contain DOI-backed route-family chemistry? & DOI-backed literature routes, route-family similarity components, exact matching, top-$k$ labels and reserved robustness/annotation records & Retrospective algorithmic recovery; robustness and human-supported credibility only after upgrade records \\
+Figure 5 & Which routes become visible and what should be refined next? & Ranking ablation, reserved workflow-baseline design, precursor-diagnostic, gas-sensitivity and trigger-based confidence-label records & Matched route-level visibility and refinement triage, not target-level baseline superiority, globally optimal weights or calibrated probabilities \\
+\bottomrule
+\end{tabular}
+\label{supp-tab:figure_logic_contract}
+\end{table}
+
+\begin{table}[p]
+\centering
+\footnotesize
+\caption{\textbf{Validation-upgrade tables for a stronger first submission.} These tables define the additional source records needed to upgrade the current retrospective comparison into a more credible blind-style validation, route-family annotation analysis and confidence-calibration analysis. The fields are templates for populated release data and should be filled only after the corresponding protocols are frozen; they are not additional result claims. In the current preparation release, \texttt{frozen\_route\_rankings.csv} and \texttt{heldout\_time\_split\_routes.csv} are header-only, so no blind-style route-recovery statistic is claimed.}
+% 中文：用于增强首投说服力的验证升级表。这些表定义将当前回顾性审计升级为更可信的类盲测验证、路线族人工标注审计和置信度校准分析所需的附加源记录字段。这些字段是填充 release 数据的模板，不是额外结果声称。
+\setlength{\tabcolsep}{1.5pt}
+\renewcommand{\arraystretch}{0.78}
+\begin{tabular}{L{0.20\textwidth}L{0.50\textwidth}L{0.20\textwidth}}
+\toprule
+\textbf{Validation upgrade} & \textbf{Minimum source fields} & \textbf{Claim enabled if populated} \\
+\midrule
+Held-out/time-split route audit & DOI and publication-year source; frozen split rule, train cutoff, scoring release, candidate set, precursor library, threshold version and submitted-ranking table; rank-freeze contract with matched-route to frozen route-id mapping; submitted rank, ranking-record hash, rank-submission timestamp/hash, label-release timestamp, leakage flags and joins to frozen ranking, literature and similarity records & Blind-style route-family recovery rather than only retrospective overlap recovery; unavailable while the frozen-ranking and held-out tables remain header-only \\
+Route-family robustness & Frozen robustness contract, threshold-perturbation records, negative-control route pairs, baseline/perturbed/control labels and scores, label-change flags and human-anchor joins to blinded annotation records & Evidence that route-family recovery is not an artifact of one threshold or uncontrolled false-positive matching \\
+Human route-family annotation & Frozen annotation contract and packet id, packet version, content hash, sampling stratum, visible route chemistry, hidden score/rank/expected-label/algorithmic-label fields, annotator labels, blinding flags, adjudicated label, agreement-set flag and similarity-record join & Human-supported route-family labels with blinded packets, pairwise agreement, Cohen's kappa, adjudication and human-versus-algorithm summaries \\
+Confidence calibration & Frozen calibration contract and freeze id, split, label config, confidence-label id/hash, trigger-rule version, outcome definition, bin-policy id, outcome-source id/hash, outcome record id/hash, score-bin edges, minimum records per label, probability policy, target id, unchanged high/medium/low label, held-out outcome, success flag, score bin, optional probability, probability-claimed flag and leakage flag & Reliability, expected calibration error and calibrated probabilities only after frozen held-out outcomes join to unchanged labels and every label meets the support threshold \\
+\bottomrule
+\end{tabular}
+\label{supp-tab:validation_upgrade_tables}
+\end{table}
+
+\begin{table}[p]
+\centering
+\scriptsize
+\caption{\textbf{Claim-boundary map.} This table summarizes how the manuscript evidence supports each major claim and which stronger interpretation remains out of scope without additional data. In the release package, the same logic is represented by the six-row claim map in \texttt{data/claim\_support.csv}, which should be reconciled against populated source tables before submission. It is intended as an editorial guardrail for first submission rather than a new result.}
+% 中文：主张-证据阶梯与主张边界。该表总结每个主要主张由哪些证据支持，以及哪些更强解释在没有额外数据前仍不应声称。它是首投前的编辑性约束，不是新的结果。
+\begin{tabular}{L{0.23\textwidth}L{0.30\textwidth}L{0.19\textwidth}L{0.16\textwidth}}
+\toprule
+\textbf{Claim in manuscript} & \textbf{Evidence used} & \textbf{Baseline or comparator} & \textbf{Boundary not claimed} \\
+\midrule
+PET-OAM-XL is an appropriate production energy engine for route enumeration & Hydride phase, reaction and target-level benchmarks plus Li$_2$AgH$_6$/Li$_2$AuH$_6$ pressure stress test & SevenNet, MatterSim variants and DFT-ranked hydride routes & Universal accuracy for all inorganic reaction chemistries \\
+InvDesRoute converts formula/CIF inputs into traceable route networks & 120-target workflow audit with joined target, phase, PET-cache, formation-route and route-energy records plus retrieved phases, PET coverage, formation reactions and PET/MP-form agreement & MP-form reaction-energy references on identical enumerated reactions and stable route identifiers & Experimental synthesizability of every target \\
+Generated networks contain literature-like route families & 80 curated routes, 59 DOI-backed overlap routes and 86 literature-seeded extension routes with algorithmic route-family matching plus reserved robustness and blinded human-anchor upgrades & Exact formula-level matching, rule/threshold-versioned labels, threshold perturbations, negative controls, full-network versus top-$k$ recovery and frozen annotation packets when populated & Prospective blind prediction, threshold-independent chemical truth or human-adjudicated validity before upgrade records are populated \\
+InvDesRoute scoring improves visible route relevance & 145-route ranking ablation comparing top-$k$ route-family recovery, with fields reserved for frozen workflow-baseline comparisons & PET energy-only, practical-first energy, full InvDesRoute score and diversity-aware display; matched target-stability-only and route-ignorant baselines require a frozen baseline manifest, current-evidence-role tags, target-versus-route rank-unit tags, route-exposure rules, route-exposure source id/hash, the same evaluation set, the same candidate set and no literature- or route-family-label scoring & Proof that the scoring weights are globally optimal or superior to target-level baselines without a frozen target-to-route exposure rule and source \\
+Confidence labels support triage and refinement & Trigger fields for practical-route support, Ehull, route-ranking disagreement, top-5 overlap and decomposition competition; labels are action priorities unless future calibration joins unchanged labels to frozen held-out outcomes & Component-level risk flags, refinement-queue reasons, label ids/hashes and frozen calibration-state joins if populated & Calibrated probabilities of experimental success before held-out outcome support \\
+The manuscript is reproducible after release completion & Populated source tables, frozen configs, reviewer checklist, figure-source records and submission-gate scripts & Template-mode schema checks versus submission-mode full gates & Final reproducibility before populated tables, frozen configs, regenerated provenance, gate pass and archive \\
+\bottomrule
+\end{tabular}
+\label{supp-tab:claim_evidence_ladder}
+\end{table}
+
+\end{document}

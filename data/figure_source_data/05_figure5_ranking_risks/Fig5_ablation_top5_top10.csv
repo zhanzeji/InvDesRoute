@@ -1,0 +1,9 @@
+mode,top_k,n_cases,strong_or_exact,moderate_or_better,same_element_or_better,mean_similarity,median_similarity
+pet_energy_all,5,145,7,13,145,0.48765,
+pet_energy_all,10,145,7,22,145,0.536225,
+pet_energy_practical,5,145,11,33,145,0.538839,
+pet_energy_practical,10,145,14,58,145,0.606809,
+synth_score,5,145,87,109,145,0.79743,
+synth_score,10,145,92,121,145,0.817619,
+diverse_top20,5,145,87,113,145,0.798021,
+diverse_top20,10,145,96,126,145,0.824759,

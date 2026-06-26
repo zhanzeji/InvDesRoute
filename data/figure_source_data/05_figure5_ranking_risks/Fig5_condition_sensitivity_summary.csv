@@ -1,0 +1,4 @@
+temperature_K,raw_vs_actionable_disagreement,n_targets
+700,71,80
+1000,73,80
+1300,80,80

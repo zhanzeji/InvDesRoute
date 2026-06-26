@@ -1,0 +1,6 @@
+category,n_targets,high_confidence,medium_confidence,low_confidence,mean_confidence_score,top1_pet_mp_form_match_rate,exergonic_best_practical_rate,low_ehull_rate
+Battery/salts/silicates,25,23,2,0,3.82,0.72,1.0,1.0
+Binary oxides,25,21,3,1,3.7,0.84,0.96,1.0
+Halides,20,20,0,0,4.0,1.0,1.0,1.0
+Nitrides/carbides/chalcogenides,25,24,1,0,3.86,0.88,0.96,1.0
+Ternary oxides,25,16,9,0,3.56,0.72,1.0,0.96

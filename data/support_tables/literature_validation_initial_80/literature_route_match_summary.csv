@@ -1,0 +1,2 @@
+n_literature_targets,n_targets_in_recommendation_table,coverage_rate,exact_precursor_match_rate,literature_precursors_contained_rate,partial_or_better_precursor_match_rate,same_element_pool_rate,exergonic_matched_route_rate,mean_match_score,median_match_score
+40,39,0.975,0.5897435897435898,0.5897435897435898,0.5897435897435898,0.7948717948717948,0.9230769230769231,0.7488431013431015,1.0

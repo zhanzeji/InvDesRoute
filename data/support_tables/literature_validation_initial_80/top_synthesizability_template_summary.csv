@@ -1,0 +1,5 @@
+route_template_reason,count
+classic ceramic route: carbonate + oxide -> target oxide + CO2,5
+classic ammonolysis/nitridation route: metal + NH3 -> nitride + H2,2
+classic carbonation route: oxide + CO2 -> carbonate,1
+classic battery-oxide route: lithium carbonate + transition-metal oxide with gas release,1

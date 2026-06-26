@@ -1,0 +1,25 @@
+panel,model,n,value,unit,reference
+phase MAE,uPET,107,0.00611324327191043,eV/atom,MP DFT
+phase MAE,SevenNet,107,0.011634994628666483,eV/atom,MP DFT
+phase MAE,MatterSim-5M,107,0.01616020264094379,eV/atom,MP DFT
+phase MAE,MatterSim-1M,107,0.02013707980225604,eV/atom,MP DFT
+phase MAE,MACE,107,0.02050447528682343,eV/atom,MP DFT
+phase MAE,CHGNet,107,0.052130024479615386,eV/atom,MP DFT
+reaction MAE,uPET,416,0.10961853870054054,eV/reaction,DFT
+reaction sign consistency,uPET,416,98.79807692307693,%,DFT
+reaction MAE,MatterSim-1M,416,0.2652280581381731,eV/reaction,DFT
+reaction sign consistency,MatterSim-1M,416,97.83653846153845,%,DFT
+reaction MAE,MatterSim-5M,416,0.3313243624152274,eV/reaction,DFT
+reaction sign consistency,MatterSim-5M,416,97.59615384615384,%,DFT
+reaction MAE,SevenNet,416,0.5793061771115002,eV/reaction,DFT
+reaction sign consistency,SevenNet,416,96.875,%,DFT
+reaction MAE,MACE,416,0.8303548915029211,eV/reaction,DFT
+reaction sign consistency,MACE,416,94.47115384615384,%,DFT
+reaction MAE,CHGNet,416,0.8697417321778846,eV/reaction,DFT
+reaction sign consistency,CHGNet,416,92.78846153846155,%,DFT
+target top1 match,PET-OAM-XI,37,1.0,fraction,DFT-ranked route
+target top1 match,SevenNet,37,0.9459459459459459,fraction,DFT-ranked route
+target top1 match,MatterSim-1M,37,0.8918918918918919,fraction,DFT-ranked route
+target top1 match,MatterSim-5M,37,0.8918918918918919,fraction,DFT-ranked route
+target top1 match,MACE,37,0.8378378378378378,fraction,DFT-ranked route
+target top1 match,CHGNet,37,0.7837837837837838,fraction,DFT-ranked route

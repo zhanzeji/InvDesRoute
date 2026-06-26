@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite the associated manuscript and archived release."
+title: "InvDesRoute: route-network planning for inorganic synthesis"
+type: dataset
+authors:
+  - family-names: Zhan
+    given-names: Yi-Heng
+  - family-names: Gao
+    given-names: Ze-Feng
+  - family-names: Lu
+    given-names: Zhong-Yi
+abstract: "Processed benchmark data, figure source tables and code snapshot supporting the InvDesRoute manuscript on route-network planning for inorganic synthesis."
+keywords:
+  - inorganic synthesis
+  - reaction networks
+  - materials informatics
+  - synthesizability
+  - interatomic potentials
+license: "MIT AND CC-BY-4.0"
+repository-code: "GITHUB_OR_ARCHIVE_URL"
+url: "ZENODO_DOI_OR_URL"
+date-released: "2026-06-26"
+version: "2026.06.26"

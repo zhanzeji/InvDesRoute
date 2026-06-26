@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+*.log
+cache/
+results/
+*.ckpt
+*.pth
+*.pth.tar
+*.model
+MP_API_KEY*
+PMG_MAPI_KEY*

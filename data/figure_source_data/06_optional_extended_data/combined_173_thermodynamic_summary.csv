@@ -1,0 +1,4 @@
+set,n_targets,n_completed,n_comparable_pet_mp_form_reactions,mean_mae_pet_vs_mp_form,median_mae_pet_vs_mp_form,mean_sign_consistency,top1_match_rate,mean_top5_overlap
+general_120,120,120,17085,0.584212,0.433452,0.931286,0.825,3.683333
+literature_seeded_53,53,53,2769,1.784082,1.134704,0.904486,0.792453,4.301887
+combined_173,173,173,19854,0.951802,0.628648,0.923076,0.815029,3.872832

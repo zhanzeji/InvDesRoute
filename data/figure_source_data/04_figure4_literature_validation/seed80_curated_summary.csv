@@ -1,0 +1,2 @@
+n_cases,completed_cases,exact_found,exact_top1,exact_top5,exact_top20,family_found,family_top1,family_top5,family_top20,missing_thermo_cases
+80,80,80,71,75,79,80,72,77,80,1
