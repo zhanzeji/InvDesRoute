@@ -46,6 +46,6 @@ Training-data overlap, complete original DFT provenance and pressure-matched hyd
 
 ## Data, citation and license
 
-Processed data are distributed separately to keep Git history small and preserve a frozen numerical snapshot. Public record identifiers must be inserted only after the archive has actually been published. `CITATION.cff` provides the software citation metadata. The manuscript is a separate research output; this repository does not assert that all manuscript calculations have been independently rerun.
+Processed data are distributed separately to keep Git history small and preserve a frozen numerical snapshot. The Zenodo identifiers for this release are [software](https://doi.org/10.5281/zenodo.24453272) and [processed data](https://doi.org/10.5281/zenodo.24453293). `CITATION.cff` provides the software citation metadata. The manuscript is a separate research output; this repository does not assert that all manuscript calculations have been independently rerun.
 
 The original InvDesRoute code is distributed under the [MIT License](LICENSE). See [LICENSE.md](LICENSE.md) for scope. Third-party licenses and data terms remain applicable. Do not commit API credentials, model weights or private handover records. For release instructions, start with [PUBLISHING](docs/PUBLISHING.md).

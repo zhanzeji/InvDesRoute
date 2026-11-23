@@ -1,7 +1,8 @@
 cff-version: 1.2.0
-message: "Please cite this software release and the associated manuscript. Add the issued DOI after archiving."
+message: "Please cite this software release and the associated manuscript."
 title: "InvDesRoute: route-network planning for inorganic synthesis"
 type: software
+doi: "10.5281/zenodo.24453272"
 repository-code: "https://github.com/zhanzeji/InvDesRoute"
 version: 0.1.0
 authors:

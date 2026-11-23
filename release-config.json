@@ -24,7 +24,7 @@
   "code_license": "MIT",
   "data_license": "CC-BY-4.0",
   "repository_url": "https://github.com/zhanzeji/InvDesRoute",
-  "code_doi": null,
-  "data_doi": null,
+  "code_doi": "10.5281/zenodo.24453272",
+  "data_doi": "10.5281/zenodo.24453293",
   "description": "Code and archived numerical inputs for balanced inorganic reaction networks, static-energy comparison, precursor ranking, retrospective route recovery and publication-time literature evaluation. Includes explicit limitations on compatibility corrections, uncertainty calibration and DFT provenance."
 }
