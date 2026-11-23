@@ -1,3 +1,0 @@
-precursor_scope,n_literature_targets,n_targets_in_recommendation_table,coverage_rate,exact_precursor_match_rate,literature_precursors_contained_rate,partial_or_better_precursor_match_rate,same_element_pool_rate,exergonic_matched_route_rate,mean_match_score,median_match_score
-literature_precursors_require_external_reservoir_elements,8,8,1.0,0.0,0.0,0.0,0.0,0.875,0.29269345238095235,0.41583333333333333
-target_element_only_literature_precursors,32,31,0.96875,0.7419354838709677,0.7419354838709677,0.7419354838709677,1.0,0.9354838709677419,0.8665591397849463,1.0

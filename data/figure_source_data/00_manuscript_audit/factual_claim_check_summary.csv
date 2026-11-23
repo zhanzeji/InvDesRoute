@@ -1,8 +1,0 @@
-claim,manuscript_value,verified_value,status
-120-target formation reactions,"18,063",18063,OK
-120-target PET/MP-form comparable reactions,"17,085",17085,OK
-120-target sign consistency,0.931,0.931,OK
-120-target top-1 agreement,99,99,OK
-145 DOI moderate-or-better full network,143,143.0,OK
-PET-energy-only top-5 moderate-or-better,13,13,OK
-InvDesRoute diversity-aware top-5 moderate-or-better,113,113,OK

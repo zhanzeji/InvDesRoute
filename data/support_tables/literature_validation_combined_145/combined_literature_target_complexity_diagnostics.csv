@@ -1,4 +1,0 @@
-target_complexity_group,n_routes,full_network_moderate_or_better,top5_moderate_or_better,top20_moderate_or_better,mean_top5_similarity
-binary targets,12,12,12,12,0.891944
-ternary targets,121,120,94,110,0.816416
-quaternary targets,12,11,3,6,0.511472

@@ -1,71 +1,51 @@
-# InvDesRoute release package
+# InvDesRoute
 
-This release package accompanies the manuscript **"InvDesRoute: route-network planning for inorganic synthesis"**.
-It is organized as a public data-and-code deposit for journal submission, revision, or reviewer inspection.
+InvDesRoute builds balanced inorganic reaction networks from target formulas or crystal structures. The workflow combines phase records, interatomic-potential energies, common precursor and gas-reservoir entries, interpretable ranking factors, and explicit refinement flags.
 
-## Directory structure
+The repository supports two distinct activities: reproducing archived numerical analyses, and inspecting the source used for phase retrieval, reaction enumeration and recommendation. Reproducing archived numbers does not require an MP API key, model weights or a GPU. Fresh energy inference and live database queries have separate requirements.
 
-- `data/`: processed benchmark tables, literature-route validation outputs, score/risk diagnostics and figure source data.
-- `code/`: cleaned workflow code for phase retrieval, PET-OAM-XL energy caching, reaction enumeration, route scoring and literature-route comparison.
-- `manuscript/`: manuscript and supplementary LaTeX snapshots for version context only.
-- `docs/`: release notes, data/code availability text, upload checklist, data dictionary and reproducibility notes.
-- `MANIFEST.txt`: full file list.
-- `SHA256SUMS.txt`: SHA256 checksums for integrity checks.
+## Scope of the release
 
-## Main data included
+The production checkpoint used in the archived calculations is EquiformerV3+DeNS-OAM2, file `omat24-mptrj-salex_gradient.pt`, SHA256 `429ccded98163122e7ba588d78e2441653f37f3e091e106c432807fe373c8f98`. Weights are obtained separately from their provider. The archived hydride benchmark has 107 usable phase references and 416 balanced reactions; the core route benchmark has 120 targets and 18,063 formation reactions. Literature evaluations, temporal tests and external-model comparisons use different cohorts and endpoints. See [benchmarks](docs/BENCHMARKS.md).
 
-The package contains processed data generated in this study, including:
+## Install and reproduce
 
-1. model-evidence benchmarks for PET-OAM-XL and baseline interatomic potentials;
-2. the 120-target inorganic route-network benchmark and 17,085 PET/MP-form comparable reaction records;
-3. DOI-backed literature-route validation outputs for the initial validation set and combined 145-route audit;
-4. InvDesRoute scoring, diversity-aware ranking, precursor-class diagnostics and refinement queues;
-5. Li2AgH6/Li2AuH6 pressure-stress-test summary tables;
-6. source tables used to create the main and supplementary figures.
+The public data archive contains processed benchmark summaries and archived validation flags under CC BY 4.0. Extract the ZIP to inspect these results. Running the full workflow requires the original benchmark inputs as well as the source-specific prerequisites described in [data sources](docs/DATA_SOURCES.md) and [reproduction](docs/REPRODUCING.md).
 
-## Main code included
+## Repository layout
 
-The code snapshot contains scripts and modules for:
+| Path | Purpose |
+| --- | --- |
+| `code/reproduce.py` | Recompute baseline benchmark metrics from archived predictions and coefficients |
+| `code/replay_gpu.py` | Fresh inference on archived structures with the specified checkpoint |
+| `code/workflow/` | Archived workflow implementation; some historical commands retain server paths |
+| `code/vendor/` | Upstream model implementation with original license notices |
+| `revision/tools/` | Additional null-space, gas, matching, pressure and statistical analyses |
+| `scripts/` | Data installation, validation, additional-analysis setup and release helpers |
+| `docs/` | Cohorts, units, source terms, known limitations and publication instructions |
+| `release-config.json` | Author-reviewed release metadata; no invented URLs or DOIs |
 
-- Materials Project phase retrieval and local cache handling;
-- PET-OAM-XL phase-energy evaluation through local uPET/PET configuration;
-- balanced formation/decomposition reaction enumeration;
-- MP-form reference construction from Materials Project formation energies;
-- practical-route filtering, InvDesRoute scoring and diversity-aware display;
-- DOI-backed literature-route comparison and route-family similarity analysis;
-- precursor-class diagnostics and gas-reservoir sensitivity analysis.
+## Additional analyses
 
-## External resources not redistributed
-
-- Materials Project raw database content and full CIF cache are not redistributed. Users should query Materials Project under its access terms for raw structures.
-- Materials Project API keys are not included.
-- PET-OAM-XL, MatterSim, MACE, CHGNet and SevenNet model checkpoints are not redistributed. Users should obtain model files from their original sources and configure paths locally.
-- The original public text-mined synthesis corpus is not claimed as a new dataset here. Processed route-validation tables derived from it are included; users should cite and access the original Kononova/Ceder resource when rerunning extraction from scratch.
-
-## Suggested upload workflow
-
-1. Push this folder to a public GitHub repository for code browsing and issue tracking.
-2. Upload `InvDesRoute_release_20260626.tar.gz` to Zenodo/Figshare/OSF for a persistent data DOI.
-3. If using Zenodo-GitHub integration, archive the GitHub release to obtain a code DOI.
-4. Replace `ZENODO_DOI_OR_URL`, `GITHUB_OR_ARCHIVE_URL` and optionally `CODE_ARCHIVE_DOI_OR_URL` in `docs/DATA_AND_CODE_AVAILABILITY_TEXT.md` after upload.
-5. Update the manuscript Data availability and Code availability sections with the final links.
-6. Keep `MANIFEST.txt` and `SHA256SUMS.txt` with the uploaded package.
-
-## Integrity check
-
-After download, verify the package with:
-
-```bash
-cd InvDesRoute_release
-sha256sum -c SHA256SUMS.txt
+```sh
+python scripts/setup_revision.py
+python revision/tools/compute_supplements.py nullspace
+python revision/tools/compute_supplements.py matching
+python revision/tools/compute_supplements.py pressure
+python revision/tools/compute_supplements.py statistics
+python revision/tools/gas_thermochemistry.py
 ```
 
-## Notes
+These commands write `revision/results/`. They require the original analysis inputs rather than new DFT calculations or new language-model generations. The setup creates a local relative directory layout needed by the archived analyses. It does not alter energies or labels.
 
-See:
+## Scientific interpretation
 
-- `docs/DATA_DICTIONARY_CN.md` for a Chinese explanation of each data group.
-- `docs/UPLOAD_CHECKLIST_CN.md` for upload and manuscript wording instructions.
-- `docs/REPRODUCIBILITY_NOTES_CN.md` for rerun requirements and limitations.
-- `docs/DATA_AND_CODE_AVAILABILITY_TEXT.md` for manuscript-ready availability text after replacing placeholders.
-- `GITHUB_UPLOAD_COMMANDS.md` for the local Git commands to push this prepared repository.
+Raw model energies, MP formation-energy references and model/reservoir-aligned recommendation energies are separate conventions. The archived core comparison did not apply MP2020 compatibility corrections to MLIP predictions. Authentic per-entry metadata are required for a matched corrected comparison. A fixed −0.05 eV/target margin is an operational rule, not a calibrated uncertainty estimate. No calibrated experimental success probability is supplied.
+
+Training-data overlap, complete original DFT provenance and pressure-matched hydrogen references remain unresolved in parts of the analysis. Gas-only thermal increments are not complete reaction Gibbs energies. The Li–Au–H and Li–Ag–H applications are computational hypotheses with competing-phase limitations. Read [known limitations](docs/LIMITATIONS.md) before interpreting a recommended route.
+
+## Data, citation and license
+
+Processed data are distributed separately to keep Git history small and preserve a frozen numerical snapshot. Public record identifiers must be inserted only after the archive has actually been published. `CITATION.cff` provides the software citation metadata. The manuscript is a separate research output; this repository does not assert that all manuscript calculations have been independently rerun.
+
+The original InvDesRoute code is distributed under the [MIT License](LICENSE). See [LICENSE.md](LICENSE.md) for scope. Third-party licenses and data terms remain applicable. Do not commit API credentials, model weights or private handover records. For release instructions, start with [PUBLISHING](docs/PUBLISHING.md).

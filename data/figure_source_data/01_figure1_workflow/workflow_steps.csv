@@ -1,6 +1,0 @@
-step,content,evidence
-Input,chemical formula or user-supplied CIF,workflow design
-Phase context,Materials Project sub-chemical-system retrieval; common precursor/gas reservoir augmentation,Methods; cached phase tables
-Energy engine,PET-OAM-XL/uPET evaluation and PET-form-aligned route energies,model evidence + workflow tables
-Route network,balanced formation and decomposition reactions,"120-target: 18,063 formation reactions"
-Recommendation,"InvDesRoute score, diversity-aware display, risk/refinement flags",145 DOI route ablation and refinement queue

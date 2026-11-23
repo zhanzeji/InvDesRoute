@@ -1,3 +1,0 @@
-top_n,n_cases,original_moderate_or_better,diverse_moderate_or_better,original_strong_or_exact,diverse_strong_or_exact,improved_cases,mean_original_similarity,mean_diverse_similarity
-10,86,76,80,59,59,7,0.849597,0.848535
-20,86,81,82,63,65,13,0.87283,0.874019

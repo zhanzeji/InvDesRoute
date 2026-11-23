@@ -1,0 +1,30 @@
+{
+  "repository_name": "InvDesRoute",
+  "version": "v0.1.0",
+  "title": "InvDesRoute: route-network planning for inorganic synthesis",
+  "creators": [
+    {
+      "name": "Zhan, Yi-Heng",
+      "affiliation": "Renmin University of China"
+    },
+    {
+      "name": "Gao, Tian-Jiao",
+      "affiliation": "Renmin University of China"
+    },
+    {
+      "name": "Gao, Ze-Feng",
+      "affiliation": "Renmin University of China"
+    },
+    {
+      "name": "Lu, Zhong-Yi",
+      "affiliation": "Renmin University of China"
+    }
+  ],
+  "github_owner": "zhanzeji",
+  "code_license": "MIT",
+  "data_license": "CC-BY-4.0",
+  "repository_url": "https://github.com/zhanzeji/InvDesRoute",
+  "code_doi": null,
+  "data_doi": null,
+  "description": "Code and archived numerical inputs for balanced inorganic reaction networks, static-energy comparison, precursor ranking, retrospective route recovery and publication-time literature evaluation. Includes explicit limitations on compatibility corrections, uncertainty calibration and DFT provenance."
+}

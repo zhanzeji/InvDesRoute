@@ -1,4 +1,0 @@
-precursor_complexity_class,n_targets,mean_pet_deltaE_per_target,median_abs_pet_mp_form_gap,mean_n_reactants,mean_n_byproducts,elemental_reactants_only_count
-complex_precursors,5,-5.240685105323789,0.9641657091430976,2.0,0.6,0
-elemental_precursors,65,-4.328780188706179,0.4769674021412617,2.0,0.0,65
-simple_compound_precursors,50,-17.4673052714008,2.991576331423745,1.9,1.0,0

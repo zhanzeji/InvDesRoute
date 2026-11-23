@@ -1,4 +1,0 @@
-set,n_cases,completed_cases,top_all_strong,top_all_moderate_or_better,top_all_same_element_or_better,top5_strong,top5_moderate_or_better,top20_moderate_or_better,mean_best_all_similarity,mean_best_top5_similarity
-initial_doi_59,59.0,59.0,55.0,57.0,59.0,31.0,40.0,47.0,0.941051,0.751153
-literature_seeded_doi_86,86.0,86.0,86.0,86.0,86.0,56.0,69.0,81.0,0.990019,0.829178
-combined_doi_145,145.0,145.0,141.0,143.0,145.0,87.0,109.0,128.0,0.970094,0.79743

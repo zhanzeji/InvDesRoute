@@ -1,7 +1,0 @@
-category,n_literature_targets,n_targets_in_recommendation_table,coverage_rate,exact_precursor_match_rate,literature_precursors_contained_rate,partial_or_better_precursor_match_rate,same_element_pool_rate,exergonic_matched_route_rate,mean_match_score,median_match_score
-Battery/salts/silicates,4,4,1.0,0.0,0.0,0.0,0.25,1.0,0.3676785714285714,0.4358333333333333
-Binary oxides,11,11,1.0,0.9090909090909091,0.9090909090909091,0.9090909090909091,1.0,0.8181818181818182,0.9254545454545454,1.0
-Halides,12,12,1.0,0.5,0.5,0.5,1.0,1.0,0.7666666666666666,1.0
-Nitrides/carbides/chalcogenides,9,9,1.0,0.7777777777777778,0.7777777777777778,0.7777777777777778,0.7777777777777778,0.8888888888888888,0.874074074074074,1.0
-Ternary oxides,3,3,1.0,0.0,0.0,0.0,0.0,1.0,0.16249999999999998,0.16249999999999998
-unmatched,1,0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0

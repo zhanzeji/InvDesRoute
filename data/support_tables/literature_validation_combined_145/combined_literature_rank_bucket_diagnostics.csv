@@ -1,5 +1,0 @@
-best_analogue_rank_bucket,n_routes,strong_or_exact,moderate_or_better,mean_best_similarity
-top1,42,42,42,0.970159
-top2_5,24,24,24,1.0
-top6_20,12,10,12,0.940417
-below_top20,67,65,65,0.964657
