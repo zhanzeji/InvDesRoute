@@ -1,0 +1,25 @@
+{
+  "version": "v0.2.0",
+  "checks": {
+    "data_checksums": true,
+    "retrospective145": true,
+    "zero_bonus_final": true,
+    "positive_control80": true,
+    "auc_common_candidates": true,
+    "auc_base": true,
+    "all_seven_reconstruction_models": true,
+    "temporal": true,
+    "external_invdesroute": true,
+    "full_inputs_retrospective": true,
+    "full_inputs_auc": true,
+    "full_inputs_seed80": true,
+    "full_inputs_S5": true,
+    "public_excludes_raw_structures_and_weights": true,
+    "credential_scan": true
+  },
+  "public_reproduction": "Regenerated scores, rankings and derived-statistic summaries; no fresh MLIP/DFT inference.",
+  "full_input_reproduction": "Refit prior and recomputed matching, S5 paired controls, AUC and seed80 from source-dependent cached inputs.",
+  "overlap_status": "107-phase overlap percentages reported by collaborator; per-structure manifest and actual training membership not received.",
+  "old_releases_overwritten": false,
+  "uploaded_to_remote": false
+}

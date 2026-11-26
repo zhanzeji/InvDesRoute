@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "title": "InvDesRoute v0.2.0: code and frozen-score reproduction",
+    "upload_type": "software",
+    "version": "v0.2.0",
+    "creators": [
+      {
+        "name": "Zhan, Yi-Heng",
+        "affiliation": "Renmin University of China"
+      },
+      {
+        "name": "Gao, Tian-Jiao",
+        "affiliation": "Renmin University of China"
+      },
+      {
+        "name": "Gao, Ze-Feng",
+        "affiliation": "Renmin University of China"
+      },
+      {
+        "name": "Lu, Zhong-Yi",
+        "affiliation": "Renmin University of China"
+      }
+    ],
+    "license": "mit",
+    "description": "Revised frozen scoring, retrospective recovery, template-bonus controls, common-subset discrimination, and positive-control reranking. Training-data overlap is disclosed; independent energy generalization is not established."
+  }
+}

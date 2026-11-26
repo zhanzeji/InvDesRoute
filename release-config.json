@@ -1,7 +1,6 @@
 {
-  "repository_name": "InvDesRoute",
-  "version": "v0.1.0",
-  "title": "InvDesRoute: route-network planning for inorganic synthesis",
+  "version": "v0.2.0",
+  "repository_url": "https://github.com/zhanzeji/InvDesRoute",
   "creators": [
     {
       "name": "Zhan, Yi-Heng",
@@ -20,11 +19,11 @@
       "affiliation": "Renmin University of China"
     }
   ],
-  "github_owner": "zhanzeji",
   "code_license": "MIT",
   "data_license": "CC-BY-4.0",
-  "repository_url": "https://github.com/zhanzeji/InvDesRoute",
-  "code_doi": "10.5281/zenodo.24453272",
-  "data_doi": "10.5281/zenodo.24453293",
-  "description": "Code and archived numerical inputs for balanced inorganic reaction networks, static-energy comparison, precursor ranking, retrospective route recovery and publication-time literature evaluation. Includes explicit limitations on compatibility corrections, uncertainty calibration and DFT provenance."
+  "previous_data_doi": "10.5281/zenodo.24459741",
+  "data_concept_doi": "10.5281/zenodo.24453292",
+  "new_version_doi": null,
+  "production_checkpoint": "omat24-mptrj-salex_gradient.pt",
+  "checkpoint_sha256": "429ccded98163122e7ba588d78e2441653f37f3e091e106c432807fe373c8f98"
 }

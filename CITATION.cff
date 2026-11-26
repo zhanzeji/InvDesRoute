@@ -1,20 +1,21 @@
 cff-version: 1.2.0
-message: "Please cite this software release and the associated manuscript."
+message: "Please cite the versioned software and data records used in your analysis."
 title: "InvDesRoute: route-network planning for inorganic synthesis"
 type: software
-doi: "10.5281/zenodo.24453272"
+version: 0.2.0
+date-released: 2026-11-26
+license: MIT
 repository-code: "https://github.com/zhanzeji/InvDesRoute"
-version: 0.1.0
 authors:
-  - family-names: "Zhan"
-    given-names: "Yi-Heng"
-    affiliation: "Renmin University of China"
-  - family-names: "Gao"
-    given-names: "Tian-Jiao"
-    affiliation: "Renmin University of China"
-  - family-names: "Gao"
-    given-names: "Ze-Feng"
-    affiliation: "Renmin University of China"
-  - family-names: "Lu"
-    given-names: "Zhong-Yi"
-    affiliation: "Renmin University of China"
+  - family-names: Zhan
+    given-names: Yi-Heng
+    affiliation: Renmin University of China
+  - family-names: Gao
+    given-names: Tian-Jiao
+    affiliation: Renmin University of China
+  - family-names: Gao
+    given-names: Ze-Feng
+    affiliation: Renmin University of China
+  - family-names: Lu
+    given-names: Zhong-Yi
+    affiliation: Renmin University of China

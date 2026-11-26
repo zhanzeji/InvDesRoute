@@ -1,51 +1,46 @@
-# InvDesRoute
+# InvDesRoute v0.2.0
 
-InvDesRoute builds balanced inorganic reaction networks from target formulas or crystal structures. The workflow combines phase records, interatomic-potential energies, common precursor and gas-reservoir entries, interpretable ranking factors, and explicit refinement flags.
+InvDesRoute enumerates balanced inorganic reactions and ranks candidate synthesis hypotheses using interatomic-potential energies, precursor rules, a historical precursor prior and diversity-aware selection.
 
-The repository supports two distinct activities: reproducing archived numerical analyses, and inspecting the source used for phase retrieval, reaction enumeration and recommendation. Reproducing archived numbers does not require an MP API key, model weights or a GPU. Fresh energy inference and live database queries have separate requirements.
+This release replaces the archived retrospective ranking with the same frozen policy used in the publication-time evaluation. It includes the revised 145-record ranking, evaluation-template controls, common-candidate AUC analysis, and 80-route positive-control reranking. Earlier versions remain separate records.
 
-## Scope of the release
+## Reproduce the published derived-data snapshot
 
-The production checkpoint used in the archived calculations is EquiformerV3+DeNS-OAM2, file `omat24-mptrj-salex_gradient.pt`, SHA256 `429ccded98163122e7ba588d78e2441653f37f3e091e106c432807fe373c8f98`. Weights are obtained separately from their provider. The archived hydride benchmark has 107 usable phase references and 416 balanced reactions; the core route benchmark has 120 targets and 18,063 formation reactions. Literature evaluations, temporal tests and external-model comparisons use different cohorts and endpoints. See [benchmarks](docs/BENCHMARKS.md).
-
-## Install and reproduce
-
-The public data archive contains processed benchmark summaries and archived validation flags under CC BY 4.0. Extract the ZIP to inspect these results. Running the full workflow requires the original benchmark inputs as well as the source-specific prerequisites described in [data sources](docs/DATA_SOURCES.md) and [reproduction](docs/REPRODUCING.md).
-
-## Repository layout
-
-| Path | Purpose |
-| --- | --- |
-| `code/reproduce.py` | Recompute baseline benchmark metrics from archived predictions and coefficients |
-| `code/replay_gpu.py` | Fresh inference on archived structures with the specified checkpoint |
-| `code/workflow/` | Archived workflow implementation; some historical commands retain server paths |
-| `code/vendor/` | Upstream model implementation with original license notices |
-| `revision/tools/` | Additional null-space, gas, matching, pressure and statistical analyses |
-| `scripts/` | Data installation, validation, additional-analysis setup and release helpers |
-| `docs/` | Cohorts, units, source terms, known limitations and publication instructions |
-| `release-config.json` | Author-reviewed release metadata; no invented URLs or DOIs |
-
-## Additional analyses
+Download and extract the code and data ZIPs into the same parent directory. Use Python 3.10 in a separate environment:
 
 ```sh
-python scripts/setup_revision.py
-python revision/tools/compute_supplements.py nullspace
-python revision/tools/compute_supplements.py matching
-python revision/tools/compute_supplements.py pressure
-python revision/tools/compute_supplements.py statistics
-python revision/tools/gas_thermochemistry.py
+python -m pip install -r requirements.txt
+python scripts/reproduce_public.py --data ../InvDesRoute-data-v0.2.0 --output recomputed/v0.2.0
 ```
 
-These commands write `revision/results/`. They require the original analysis inputs rather than new DFT calculations or new language-model generations. The setup creates a local relative directory layout needed by the archived analyses. It does not alter energies or labels.
+The command verifies the data checksums, recomputes base scores, historical-prior mixture scores and MMR displays, and calculates literature recovery, zero-template-bonus recovery and common-subset AUC. It also aggregates the released hydride residuals, temporal records, external-model records and network metrics. Results and pass/fail checks are written to the output directory. No API key, model download or GPU is required for this path.
 
-## Scientific interpretation
+Candidate-reference similarities and reference-identity indicators are supplied as frozen evaluation outputs. This public path does not re-extract literature labels, rematch raw structures or rerun MLIP/DFT calculations. Hydride errors reproduce an overlapping-reference reconstruction analysis; they do not establish held-out energy accuracy.
 
-Raw model energies, MP formation-energy references and model/reservoir-aligned recommendation energies are separate conventions. The archived core comparison did not apply MP2020 compatibility corrections to MLIP predictions. Authentic per-entry metadata are required for a matched corrected comparison. A fixed −0.05 eV/target margin is an operational rule, not a calibrated uncertainty estimate. No calibrated experimental success probability is supplied.
+## Frozen recommendation policy
 
-Training-data overlap, complete original DFT provenance and pressure-matched hydrogen references remain unresolved in parts of the analysis. Gas-only thermal increments are not complete reaction Gibbs energies. The Li–Au–H and Li–Ag–H applications are computational hypotheses with competing-phase limitations. Read [known limitations](docs/LIMITATIONS.md) before interpreting a recommended route.
+Component order is energy, rule-based precursor prior, template, practical status, complexity, phase availability and condition simplicity. Weights are `(0.10, 0.22, 0.22, 0.08, 0.08, 0.10, 0.20)`. The ranking template bonus is retained and the base score is capped at one. The historical prior contributes 0.30 and the MMR penalty is 0.10. The similarity metric is an evaluation endpoint, not a recommendation score.
 
-## Data, citation and license
+The primary retrospective denominator remains 145 cohort records, including a FeS reference appearing in two source cohorts. There are 144 distinct target/DOI/precursor/byproduct keys. The deduplicated table is sensitivity only. Primary top-five recovery is 62 strict identities, 92 strong-or-complete-recall matches and 115 moderate-or-better matches.
 
-Processed data are distributed separately to keep Git history small and preserve a frozen numerical snapshot. The Zenodo identifiers for this release are [software](https://doi.org/10.5281/zenodo.24453272) and [processed data](https://doi.org/10.5281/zenodo.24453293). `CITATION.cff` provides the software citation metadata. The manuscript is a separate research output; this repository does not assert that all manuscript calculations have been independently rerun.
+## Recompute from separately obtained source-dependent inputs
 
-The original InvDesRoute code is distributed under the [MIT License](LICENSE). See [LICENSE.md](LICENSE.md) for scope. Third-party licenses and data terms remain applicable. Do not commit API credentials, model weights or private handover records. For release instructions, start with [PUBLISHING](docs/PUBLISHING.md).
+```sh
+python scripts/reproduce_full.py --inputs /path/to/InvDesRoute-private-inputs-v0.2.0 --output recomputed/source-dependent
+```
+
+This path rebuilds the historical prior from its archived records and recomputes the 145-record matches, paired template-bonus controls, common-candidate discrimination and the 80-route control. The corresponding complete input archive is retained separately because redistribution conditions for some source records have not been established. Obtain the original data from their providers or request the documented input manifest from the authors. Do not infer that the public archive alone reproduces fresh structure retrieval, MLIP inference, source-label extraction or every calculation in the manuscript.
+
+## Repository contents
+
+| Directory | Contents |
+|---|---|
+| `scripts/` | Current public and source-dependent reproduction entry points |
+| `analysis/` | Revised scoring and numerical-analysis scripts |
+| `code/workflow/` | Workflow modules used by the analyses; historical helper names may retain legacy terminology |
+| `docs/` | Data index, interpretation limits, release changes and source attribution |
+| `environment-tested.json` | Versions used for the release checks |
+
+Original code is released under MIT. Third-party libraries and model checkpoints retain their own terms. Model weights, raw MP structures, raw literature recipes and raw JANAF tables are not distributed in this public release. The official EquiformerV3 implementation and weights are available from https://github.com/atomicarchitects/equiformer_v3 .
+
+See `docs/RESULTS_AND_LIMITATIONS.md` before interpreting benchmark accuracy or an individual synthesis recommendation.
