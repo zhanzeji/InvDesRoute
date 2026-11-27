@@ -1,5 +1,5 @@
 {
-  "version": "v0.2.0",
+  "version": "v0.2.1",
   "repository_url": "https://github.com/zhanzeji/InvDesRoute",
   "creators": [
     {
@@ -21,7 +21,7 @@
   ],
   "code_license": "MIT",
   "data_license": "CC-BY-4.0",
-  "previous_data_doi": "10.5281/zenodo.24459741",
+  "previous_data_doi": "10.5281/zenodo.24557401",
   "data_concept_doi": "10.5281/zenodo.24453292",
   "new_version_doi": null,
   "production_checkpoint": "omat24-mptrj-salex_gradient.pt",

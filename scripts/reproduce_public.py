@@ -13,7 +13,7 @@ sys.path.insert(0,str(ROOT/'code/workflow/multi_route_benchmark/temporal_validat
 from evaluate_2022_temporal_benchmark import rank_routes,profile_score,PROFILES
 
 def main():
-    parser=argparse.ArgumentParser(description='Reproduce v0.2.0 rankings and metrics from the public derived-data archive.')
+    parser=argparse.ArgumentParser(description='Reproduce v0.2.1 rankings and metrics from the public derived-data archive.')
     parser.add_argument('--data',type=Path,required=True)
     parser.add_argument('--output',type=Path,default=ROOT/'recomputed')
     args=parser.parse_args()
@@ -32,17 +32,25 @@ def main():
     displays=[]
     for (pool,target),frame in features.groupby(['pool','target']):
         routes=frame.to_dict('records')
-        for mode,alpha,penalty in [('base',0,0),('base_corpus',.3,0),('final',.3,.1)]:
-            ranked=rank_routes(target,routes,'condition_heavy',alpha,penalty,20)
+        for mode,alpha,penalty in [('energy_only',0,0),('practical_energy',0,0),('base',0,0),('base_corpus',.3,0),('final',.3,.1)]:
+            if mode in ['energy_only','practical_energy']:
+                def key(route):
+                    try: value=float(route['baseline_energy_eV_target'])
+                    except (ValueError,TypeError): value=float('inf')
+                    practical=0 if str(route['baseline_practical']).lower() in ['true','1','yes'] else 1
+                    return ((practical,) if mode=='practical_energy' else ())+(value,route['reaction'])
+                ranked=sorted(routes,key=key)[:20]
+            else:
+                ranked=rank_routes(target,routes,'condition_heavy',alpha,penalty,20)
             ranking[(pool,target,mode)]=ranked
             for rank,route in enumerate(ranked,1):
                 displays.append(dict(pool=pool,target=target,mode=mode,rank=rank,route_id=route['route_id'],
-                    reaction=route['reaction'],base_score=route['evaluation_base_score'],rank_score=route['evaluation_rank_score']))
+                    reaction=route['reaction'],base_score=route.get('evaluation_base_score',''),rank_score=route.get('evaluation_rank_score','')))
     pd.DataFrame(displays).to_csv(output/'ranked_routes_top20.csv',index=False)
     detail=[]
     for reference in refs.to_dict('records'):
         matches=record_matches[reference['record_id']]
-        for mode in ['base','base_corpus','final']:
+        for mode in ['energy_only','practical_energy','base','base_corpus','final']:
             ranked=ranking[(reference['pool'],reference['target'],mode)]
             for window in [1,5,10,20]:
                 selected=matches.loc[[route['route_id'] for route in ranked[:window]]]
@@ -59,6 +67,15 @@ def main():
     details.to_csv(output/'record_recovery.csv',index=False)
     recovery=details.groupby(['role','mode','top_k'])[['strict_identity','complete_recall','strong_or_complete','moderate_or_better','zero_strong','zero_moderate']].sum().reset_index()
     recovery.to_csv(output/'recovery_summary.csv',index=False)
+    coverage=[]
+    for reference in refs[refs.role.eq('retrospective144')].to_dict('records'):
+        matches=record_matches[reference['record_id']]
+        coverage.append(dict(record_id=reference['record_id'],cohort=reference['cohort'],
+            complete_recall=bool(matches.complete_recall.any()),strict_identity=bool(matches.strict_identity.any()),
+            strong_or_complete=bool(matches.complete_recall.any() or matches.similarity.max()>=.78),
+            moderate_or_better=bool(matches.complete_recall.any() or matches.similarity.max()>=.62)))
+    coverage=pd.DataFrame(coverage)
+    coverage.to_csv(output/'full_network_coverage.csv',index=False)
     auc=pd.read_csv(data/'inputs/auc_candidates.csv')
     recalculated=np.asarray([profile_score(route,PROFILES['condition_heavy']) for route in auc.fillna('').to_dict('records')])
     assert np.allclose(recalculated,auc.new_base_score.to_numpy(),rtol=0,atol=1e-12)
@@ -69,6 +86,15 @@ def main():
         auc_rows.append(dict(predictor=predictor,candidates=len(common),positives=int(common.exact_full_route.sum()),
             ROC_AUC=float(roc_auc_score(common.exact_full_route,common[predictor])),AP=float(average_precision_score(common.exact_full_route,common[predictor]))))
     pd.DataFrame(auc_rows).to_csv(output/'auc_common_subset.csv',index=False)
+    displayed_energy=pd.read_csv(data/'inputs/temporal_displayed_energy.csv')
+    physical=[]
+    for configuration,frame in displayed_energy.groupby('configuration'):
+        energy=pd.to_numeric(frame.synth_rank_deltaE_per_target,errors='coerce')
+        physical.append(dict(configuration=configuration,displayed=len(frame),complete=int(energy.notna().sum()),
+            missing=int(energy.isna().sum()),strongly_uphill=int(energy.gt(1).sum()),
+            uphill_fraction=float(energy.gt(1).sum()/energy.notna().sum())))
+    physical=pd.DataFrame(physical).set_index('configuration')
+    physical.to_csv(output/'temporal_energy_fractions.csv')
     phase=pd.read_csv(data/'inputs/hydride_phase_residuals.csv')
     reaction=pd.read_csv(data/'inputs/hydride_reaction_residuals.csv')
     hydride=[]
@@ -92,21 +118,31 @@ def main():
         network_rows.append(dict(cohort=cohort,targets=len(frame),reactions=int(frame.comparable_routes.sum()),
             mean_MAE=float(frame.mae.mean()),mean_sign=float(frame.sign.mean()),top1=int(frame.top1.sum()),mean_overlap=float(frame.overlap.mean())))
     pd.DataFrame(network_rows).to_csv(output/'network_summary.csv',index=False)
-    final=recovery[(recovery.role=='retrospective145') & (recovery['mode']=='final') & recovery.top_k.eq(5)].iloc[0]
+    final=recovery[(recovery.role=='retrospective144') & (recovery['mode']=='final') & recovery.top_k.eq(5)].iloc[0]
     seed=recovery[(recovery.role=='positive_control80') & (recovery['mode']=='final') & recovery.top_k.eq(5)].iloc[0]
     future=temporal[(temporal.configuration=='selected_with_equiformer_energy') & temporal.top_k.eq(5)].iloc[0]
     checks=dict(
         data_checksums=True,
-        retrospective145=[int(final.strict_identity),int(final.strong_or_complete),int(final.moderate_or_better)]==[62,92,115],
-        zero_bonus_final=[int(final.zero_strong),int(final.zero_moderate)]==[81,106],
+        temporal_energy_with=physical.loc['selected_with_equiformer_energy',['displayed','complete','missing','strongly_uphill']].tolist()==[280,266,14,96],
+        temporal_energy_without=physical.loc['selected_without_energy',['displayed','complete','missing','strongly_uphill']].tolist()==[280,263,17,154],
+
+        deduplicated_references=int(refs.role.eq('retrospective144').sum())==144 and 'extension86_078' not in set(refs.record_id),
+        complete_network_coverage=[int(coverage.strong_or_complete.sum()),int(coverage.moderate_or_better.sum())]==[140,142],
+        generic_complete_recall=int(coverage[coverage.cohort.eq('initial59')].complete_recall.sum())==40,
+
+        retrospective144=[int(final.strict_identity),int(final.strong_or_complete),int(final.moderate_or_better)]==[62,91,114],
+        zero_bonus_final=[int(final.zero_strong),int(final.zero_moderate)]==[80,105],
         positive_control80=[int(seed.complete_recall),int(seed.moderate_or_better)]==[78,80],
         auc_common_candidates=len(common)==5326,
         auc_base=abs(auc_rows[0]['ROC_AUC']-.8315041514737507)<1e-12,
         all_seven_reconstruction_models=len(hydride)==7 and all(row['phases']==107 and row['reactions']==416 for row in hydride),
         temporal=[int(future.strict_exact),int(future.strong_or_exact),int(future.moderate_or_better)]==[47,49,53],
         external_invdesroute=own_external.iloc[0].tolist()==[64,79,110])
+    for mode,expected in [('energy_only',[6,8]),('practical_energy',[8,17])]:
+        baseline=recovery[(recovery.role=='retrospective144') & (recovery['mode']==mode) & recovery.top_k.eq(5)].iloc[0]
+        checks[mode+'_recovery']=[int(baseline.strong_or_complete),int(baseline.moderate_or_better)]==expected
     (output/'checks.json').write_text(json.dumps(checks,indent=2))
     print(json.dumps(checks,indent=2))
-    if not all(checks.values()):raise SystemExit('One or more v0.2.0 reproduction checks failed.')
+    if not all(checks.values()):raise SystemExit('One or more v0.2.1 reproduction checks failed.')
 
 if __name__=='__main__':main()

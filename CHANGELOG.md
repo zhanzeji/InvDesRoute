@@ -1,5 +1,14 @@
 # Release history
 
+## v0.2.1 — 2026-11-27
+
+- Use 144 distinct retrospective reference records as the primary cohort.
+- Remove extension86_078 from both reference and donor populations, retaining initial59_059.
+- Recompute all retrospective ranking windows, class statistics and paired template-bonus controls.
+- Final top-five recovery is 62 strict identities, 91 strong-or-complete-recall and 114 moderate-or-better matches; zero-bonus graded counts are 80 and 105.
+- Correct generic-pool complete-recall coverage to 40/59 using existence of a complete candidate rather than one tie-selected best candidate.
+- Preserve the checked 56-target temporal and 24-target external evaluations.
+
 ## v0.2.0 — 2026-11-26
 
 - Apply the development-selected base weights, historical prior and MMR policy to the 145-record retrospective cohort.

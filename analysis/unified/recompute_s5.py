@@ -48,7 +48,7 @@ for position, reference in references.iterrows():
     values = [scores(target,precursors,byproducts,route) for route in pool_cache[key]]
     full_maxima.append(dict(record_id=reference['record_id'],full_original=max(value[0] for value in values),full_zero=max(value[1] for value in values)))
     if (position+1)%25==0:
-        print(f'Full network: {position+1}/145',flush=True)
+        print(f'Full network: {position+1}/144',flush=True)
 full = pd.DataFrame(full_maxima)
 full.to_csv(OUT / 'full_network_max_similarity.csv',index=False)
 zero_detail = pd.read_csv(ROOT / 'results/zero_matching_bonus_record_results.csv').set_index(['record_id','mode'])
@@ -56,7 +56,7 @@ top_scores = [float(top5.loc[record_id,'route_similarity_score']) for record_id 
 zero_scores = [float(zero_detail.loc[(record_id,'new_base'),'score']) for record_id in references.record_id]
 threshold_rows = []
 for threshold in THRESHOLDS:
-    threshold_rows.append(dict(threshold=threshold,records=145,
+    threshold_rows.append(dict(threshold=threshold,records=144,
         full_original=int((full.full_original>=threshold).sum()),full_zero=int((full.full_zero>=threshold).sum()),
         top5_base_original=int((np.asarray(top_scores)>=threshold).sum()),top5_base_zero=int((np.asarray(zero_scores)>=threshold).sum())))
 
@@ -68,7 +68,7 @@ for reference in references.to_dict('records'):
         byproducts=split_formulas(selected['recommended_byproducts']),
         reaction=selected['recommended_reaction'],template=selected['recommended_template']))
 pd.DataFrame([{name:(';'.join(sorted(value)) if isinstance(value,set) else value) for name,value in donor.items()} for donor in donors]).to_csv(OUT / 'decoy_donor_records.csv',index=False)
-pair_scores = np.zeros((145,145,2))
+pair_scores = np.zeros((144,144,2))
 pair_rows = []
 for reference_index, reference in enumerate(references.to_dict('records')):
     target = reference['target']
@@ -87,11 +87,11 @@ pd.DataFrame(pair_rows).to_csv(OUT / 'decoy_pair_scores.csv',index=False)
 print('Decoy scores precomputed; sampling 1000 paired draws.',flush=True)
 rng = np.random.default_rng(20260722)
 iterations = []
-sample_indices = np.empty((1000,145,5),dtype=np.int16)
+sample_indices = np.empty((1000,144,5),dtype=np.int16)
 eligible = [np.asarray([index for index,donor in enumerate(donors) if donor['target']!=reference['target']]) for reference in references.to_dict('records')]
 for iteration in range(1000):
-    maxima = np.empty((145,2))
-    for reference_index in range(145):
+    maxima = np.empty((144,2))
+    for reference_index in range(144):
         selected = rng.choice(len(eligible[reference_index]),size=5,replace=False)
         donor_indices = eligible[reference_index][selected]
         sample_indices[iteration,reference_index] = donor_indices
@@ -117,7 +117,7 @@ zero_summary = pd.read_csv(ROOT / 'results/zero_matching_bonus_summary.csv').set
 table11 = []
 for label,mode in [('Energy only','old_production_energy_all'),('Practical first, then energy','old_production_energy_practical'),
                     ('Frozen base score','new_base'),('Base + historical prior','new_corpus'),('Base + historical prior + MMR','new_corpus_mmr')]:
-    original = base_summary[(base_summary.prior_mode=='frozen_original_prior') & (base_summary['mode']==mode) & (base_summary.cohort=='all145') & (base_summary.top_k==5)].iloc[0]
+    original = base_summary[(base_summary.prior_mode=='frozen_original_prior') & (base_summary['mode']==mode) & (base_summary.cohort=='all144') & (base_summary.top_k==5)].iloc[0]
     if mode.startswith('old_'):
         matches = []
         for reference in references.to_dict('records'):
@@ -136,11 +136,11 @@ for label,mode in [('Energy only','old_production_energy_all'),('Practical first
                         moderate_original=int(original.moderate_or_better),moderate_zero=moderate_zero))
 table11 = pd.DataFrame(table11)
 table11.to_csv(OUT / 'S11_bonus_sensitivity.csv',index=False)
-configuration = dict(records=145,random_seed=20260722,iterations=1000,donors_per_draw=5,
+configuration = dict(records=144,random_seed=20260722,iterations=1000,donors_per_draw=5,
     donor_definition='One best-matching candidate within each reference record frozen-base top-five window; record-weighted as in archived control.',
     target_exclusion='Exclude donors with the same normalized target formula.',
     target_transplant='Replace donor target product with recipient target; retain donor byproducts. This is a similarity-specific negative control, not a balanced proposed reaction.',
-    scope='Archived 145-record cohort; duplicate FeS retained for comparability. Not the deduplicated 144-record analysis.',
+    scope='144 distinct records; extension86_078 excluded and initial59_059 retained. Donor and recipient populations are both deduplicated.',
     evaluation_only='Set matching B_template to zero; do not change ranking S_T, ranking B_T, weights, alpha, lambda, or displayed routes.')
 (OUT / 'configuration.json').write_text(json.dumps(configuration,indent=2))
 print(table[table.threshold.isin([.62,.70,.78,.80])].to_string(index=False),flush=True)

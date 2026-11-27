@@ -1,8 +1,8 @@
-# InvDesRoute v0.2.0
+# InvDesRoute v0.2.1
 
 InvDesRoute enumerates balanced inorganic reactions and ranks candidate synthesis hypotheses using interatomic-potential energies, precursor rules, a historical precursor prior and diversity-aware selection.
 
-This release replaces the archived retrospective ranking with the same frozen policy used in the publication-time evaluation. It includes the revised 145-record ranking, evaluation-template controls, common-candidate AUC analysis, and 80-route positive-control reranking. Earlier versions remain separate records.
+This release replaces the archived retrospective ranking with the same frozen policy used in the publication-time evaluation. It includes the revised 144-record ranking, evaluation-template controls, common-candidate AUC analysis, and 80-route positive-control reranking. Earlier versions remain separate records.
 
 ## Reproduce the published derived-data snapshot
 
@@ -10,7 +10,7 @@ Download and extract the code and data ZIPs into the same parent directory. Use 
 
 ```sh
 python -m pip install -r requirements.txt
-python scripts/reproduce_public.py --data ../InvDesRoute-data-v0.2.0 --output recomputed/v0.2.0
+python scripts/reproduce_public.py --data ../InvDesRoute-data-v0.2.1 --output recomputed/v0.2.1
 ```
 
 The command verifies the data checksums, recomputes base scores, historical-prior mixture scores and MMR displays, and calculates literature recovery, zero-template-bonus recovery and common-subset AUC. It also aggregates the released hydride residuals, temporal records, external-model records and network metrics. Results and pass/fail checks are written to the output directory. No API key, model download or GPU is required for this path.
@@ -21,15 +21,15 @@ Candidate-reference similarities and reference-identity indicators are supplied 
 
 Component order is energy, rule-based precursor prior, template, practical status, complexity, phase availability and condition simplicity. Weights are `(0.10, 0.22, 0.22, 0.08, 0.08, 0.10, 0.20)`. The ranking template bonus is retained and the base score is capped at one. The historical prior contributes 0.30 and the MMR penalty is 0.10. The similarity metric is an evaluation endpoint, not a recommendation score.
 
-The primary retrospective denominator remains 145 cohort records, including a FeS reference appearing in two source cohorts. There are 144 distinct target/DOI/precursor/byproduct keys. The deduplicated table is sensitivity only. Primary top-five recovery is 62 strict identities, 92 strong-or-complete-recall matches and 115 moderate-or-better matches.
+The primary retrospective benchmark contains 144 distinct reference records. The generic candidate-pool FeS record is retained, and the duplicate literature-augmented record is excluded. Primary top-five recovery is 62 strict identities, 91 strong-or-complete-recall matches and 114 moderate-or-better matches.
 
 ## Recompute from separately obtained source-dependent inputs
 
 ```sh
-python scripts/reproduce_full.py --inputs /path/to/InvDesRoute-private-inputs-v0.2.0 --output recomputed/source-dependent
+python scripts/reproduce_full.py --inputs /path/to/InvDesRoute-private-inputs-v0.2.1 --output recomputed/source-dependent
 ```
 
-This path rebuilds the historical prior from its archived records and recomputes the 145-record matches, paired template-bonus controls, common-candidate discrimination and the 80-route control. The corresponding complete input archive is retained separately because redistribution conditions for some source records have not been established. Obtain the original data from their providers or request the documented input manifest from the authors. Do not infer that the public archive alone reproduces fresh structure retrieval, MLIP inference, source-label extraction or every calculation in the manuscript.
+This path rebuilds the historical prior from its archived records and recomputes the 144-record matches, paired template-bonus controls, common-candidate discrimination and the 80-route control. The corresponding complete input archive is retained separately because redistribution conditions for some source records have not been established. Obtain the original data from their providers or request the documented input manifest from the authors. Do not infer that the public archive alone reproduces fresh structure retrieval, MLIP inference, source-label extraction or every calculation in the manuscript.
 
 ## Repository contents
 

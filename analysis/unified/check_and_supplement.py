@@ -14,16 +14,11 @@ from evaluate_route_similarity import parse_side, nonvolatile_source_elements, r
 
 OUT = ROOT / 'results'
 summary = pd.read_csv(OUT / 'summary.csv')
-expected = {
-    'old_production_energy_all': [(1,2),(6,8),(7,11),(10,23)],
-    'old_production_energy_practical': [(6,8),(8,17),(11,25),(20,53)],
-    'old_synth_score': [(41,58),(81,104),(90,121),(98,128)],
-    'old_diverse_top20': [(41,58),(84,115),(96,126),(103,129)],
-}
+expected = {'old_production_energy_all': [(1, 2), (6, 8), (7, 11), (10, 23)], 'old_production_energy_practical': [(6, 8), (8, 17), (11, 25), (20, 53)], 'old_synth_score': [(40, 57), (80, 103), (89, 120), (97, 127)], 'old_diverse_top20': [(40, 57), (83, 114), (95, 125), (102, 128)]}
 checks = []
 for mode, values in expected.items():
     for top_k, counts in zip([1,5,10,20], values):
-        row = summary[(summary['mode'] == mode) & (summary.cohort == 'all145') & (summary.top_k == top_k)].iloc[0]
+        row = summary[(summary['mode'] == mode) & (summary.cohort == 'all144') & (summary.top_k == top_k)].iloc[0]
         actual = (int(row.strong_or_exact), int(row.moderate_or_better))
         assert actual == counts, (mode, top_k, actual, counts)
         checks.append(dict(mode=mode, top_k=top_k, expected=counts, actual=actual, passed=True))

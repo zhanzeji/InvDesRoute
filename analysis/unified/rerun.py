@@ -30,6 +30,8 @@ for cohort, filename, folder in [
 ]:
     frame = pd.read_csv(INPUT / 'literature/references' / filename).fillna('')
     for index, reference in frame.iterrows():
+        if cohort == 'extension86' and index == 77:
+            continue
         reference = reference.to_dict()
         target = normalize(reference['target'])
         key = (cohort, target)
@@ -43,7 +45,7 @@ for cohort, filename, folder in [
             for route_index, route in enumerate(routes):
                 route['_audit_id'] = route_index
             cases[key] = routes
-assert len(references) == 145
+assert len(references) == 144
 prior_frame = pd.read_csv(INPUT / 'split/historical_prior_routes_through_2020.csv', low_memory=False).fillna('')
 development = pd.read_csv(INPUT / 'split/development_routes_2021_2022.csv').fillna('')
 future = pd.read_csv(INPUT / 'split/future_routes_2023_2024.csv').fillna('')
@@ -129,7 +131,7 @@ for prior_mode in ['frozen_original_prior', 'exclude_audit_targets_and_dois']:
                     **best,
                 })
         if (reference_index + 1) % 25 == 0:
-            print(f'{prior_mode}: evaluated {reference_index+1}/145 records', flush=True)
+            print(f'{prior_mode}: evaluated {reference_index+1}/144 records', flush=True)
 detail = pd.DataFrame(all_detail)
 detail.to_csv(OUT / 'record_level_results.csv', index=False)
 pd.DataFrame(candidate_rows).to_csv(OUT / 'new_policy_top20_candidates.csv', index=False)
@@ -137,8 +139,8 @@ pd.DataFrame(full_detail).to_csv(OUT / 'full_network_coverage.csv', index=False)
 summaries = []
 for grouping, frame in detail.groupby(['prior_mode', 'mode', 'top_k'], sort=False):
     prior_mode, mode, top_k = grouping
-    for cohort in ['all145', 'initial59', 'extension86']:
-        subset = frame if cohort == 'all145' else frame[frame['cohort'] == cohort]
+    for cohort in ['all144', 'initial59', 'extension86']:
+        subset = frame if cohort == 'all144' else frame[frame['cohort'] == cohort]
         summaries.append({
             'prior_mode': prior_mode, 'mode': mode, 'top_k': top_k, 'cohort': cohort,
             'n_records': len(subset),
@@ -159,5 +161,5 @@ config = dict(weights=dict(zip(COMPONENTS, PROFILES['condition_heavy'])), alpha=
 checksums = {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
              for directory in [INPUT, CODE] for path in sorted(directory.rglob('*')) if path.is_file() and '__pycache__' not in str(path)}
 (OUT / 'input_sha256.json').write_text(json.dumps(checksums, indent=2))
-print(summary[(summary.cohort == 'all145') & (summary.top_k == 5)].to_string(index=False), flush=True)
+print(summary[(summary.cohort == 'all144') & (summary.top_k == 5)].to_string(index=False), flush=True)
 print(json.dumps(config, indent=2), flush=True)

@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "Please cite the versioned software and data records used in your analysis."
 title: "InvDesRoute: route-network planning for inorganic synthesis"
 type: software
-version: 0.2.0
-date-released: 2026-11-26
+version: 0.2.1
+date-released: 2026-11-27
 license: MIT
 repository-code: "https://github.com/zhanzeji/InvDesRoute"
 authors:
